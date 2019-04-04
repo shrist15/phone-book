@@ -1,0 +1,140 @@
+<html>
+    <head>
+        <title>Add Edit Remove HTML Table Row</title>
+        <meta charset="windows-1252">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        
+        <style>
+            h1{text-shadow: white;color: white;background-color: red;margin: 3%;text-align: center;}
+            .container{overflow: hidden;}
+            .tab{float: left;width: 200;height: 100%;}
+            .tab-1{margin-left: 50px;width: 200;height: 100%;padding: 15px;}
+            .tab-2 input{display: block;margin-bottom: 10px;}
+            tr{transition:all .25s ease-in-out}
+            tr:hover{background-color:#EEE;cursor: pointer}
+            
+        </style>
+        
+    </head>
+    <body>
+        <h1>List Of Suscriber</h1>
+        <div class="container">
+            <div class="tab tab-1">
+                <table id="table" border="1" style="width: 400%;height: 50%; margin: 100%;text-align: center;">
+                    <tr>
+                        <th><b>Sno.</b></th>
+                        <th><b>User Name</b></th>
+                        <th><b>Phone-Number</b></th>
+                    </tr>
+                    <tr>
+                        <td>1</td>
+                        <td>B1</td>
+                        <td>9999999999</td>
+                    </tr>
+                    <tr>
+                        <td>2</td>
+                        <td>B3</td>
+                        <td>8888888888</td>
+                    </tr>
+                    <tr>
+                        <td>3</td>
+                        <td>B2</td>
+                        <td>7777777777</td>
+                    </tr>
+                </table>
+            </div>
+            <div class="tab tab-2">
+                Serial-Number :<input type="number" placeholder="S.no" name="fname" id="fname">
+                User-Name :<input type="text" placeholder="User-Name" name="lname" id="lname">
+                Phone-Number :<input type="number" placeholder="Phone-Number" name="age" id="age">
+                
+                <button onclick="addHtmlTableRow();">Add</button>
+                
+                <button onclick="removeSelectedRow();">Remove</button>
+            </div>
+        </div>
+        
+        <script>
+            
+            var rIndex,
+                table = document.getElementById("table");
+            
+            // check the empty input
+            function checkEmptyInput()
+            {
+                var isEmpty = false,
+                    fname = document.getElementById("fname").value,
+                    lname = document.getElementById("lname").value,
+                    age = document.getElementById("age").value;
+            
+                if(fname === ""){
+                    alert("First Name Connot Be Empty");
+                    isEmpty = true;
+                }
+                else if(lname === ""){
+                    alert("Last Name Connot Be Empty");
+                    isEmpty = true;
+                }
+                else if(age === ""){
+                    alert("Age Connot Be Empty");
+                    isEmpty = true;
+                }
+                return isEmpty;
+            }
+            
+            // add Row
+            function addHtmlTableRow()
+            {
+                // get the table by id
+                // create a new row and cells
+                // get value from input text
+                // set the values into row cell's
+                if(!checkEmptyInput()){
+                var newRow = table.insertRow(table.length),
+                    cell1 = newRow.insertCell(0),
+                    cell2 = newRow.insertCell(1),
+                    cell3 = newRow.insertCell(2),
+                    fname = document.getElementById("fname").value,
+                    lname = document.getElementById("lname").value,
+                    age = document.getElementById("age").value;
+            
+                cell1.innerHTML = fname;
+                cell2.innerHTML = lname;
+                cell3.innerHTML = age;
+                // call the function to set the event to the new row
+                selectedRowToInput();
+            }
+            }
+            
+            // display selected row data into input text
+            function selectedRowToInput()
+            {
+                
+                for(var i = 1; i < table.rows.length; i++)
+                {
+                    table.rows[i].onclick = function()
+                    {
+                      // get the seected row index
+                      rIndex = this.rowIndex;
+                      document.getElementById("fname").value = this.cells[0].innerHTML;
+                      document.getElementById("lname").value = this.cells[1].innerHTML;
+                      document.getElementById("age").value = this.cells[2].innerHTML;
+                    };
+                }
+            }
+            selectedRowToInput();
+            
+            
+            
+            function removeSelectedRow()
+            {
+                table.deleteRow(rIndex);
+                // clear input text
+                document.getElementById("fname").value = "";
+                document.getElementById("lname").value = "";
+                document.getElementById("age").value = "";
+            }
+        </script>
+        
+    </body>
+</html>
